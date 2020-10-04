@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content %} 
+
+<div>
+	{% if users_query.count == 0  %}
+		<p>Пользователей нет</p>
+	{% else %}
+		{% for i in users_query %}
+			<p><a href = "/users/{{i.id}}">{{i.id}}.{{i.username}}</a></p>
+		{% endfor %}
+	{% endif %}
+
+</div>
+
+
+{% endblock %}

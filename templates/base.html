@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = "UTF-8">
+	<title>{% block title %}Сайт{% endblock %}</title>
+	{% block script %}{% endblock %}
+	<style type="text/css">
+	header {
+		background-color: #01796F;
+	}
+	body { 
+		background-color: #7BB661;
+    	margin: 0;
+    }
+	nav {
+		background-color: #01796F;
+		border: 0px;
+	}
+	p {
+    	margin: 0;
+    }
+
+	.title {
+		background-color: #01790A;
+	}
+	.text-title {
+		font-size: 30pt;
+		margin-top: 10pt;
+		margin-bottom: 10pt;
+		margin-left: 10pt;
+	}
+	.bottom {
+		background-color: #01796F;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+	}
+	.text-bottom {
+		font-size: 13pt;
+		margin-top: 10pt;
+		margin-bottom: 10pt;
+		margin-left: 10pt;
+	}
+	.page{
+		border-right-style: solid;
+		border-right-width: 2pt;
+		
+	}
+	
+	.page-text{
+		font-size: 10pt;
+		margin: 0;
+		margin-left: 10%;
+		margin-right: 10%;		
+	}
+	.menu {
+		background-color: #01796F;
+		width: 100%;
+		padding: 0;
+		margin-top: 6pt;
+		margin-bottom: 6pt;
+	}
+	{% block style %}{% endblock %}
+</style>
+</head>
+<body>
+	<header>
+		<div class="title"><a class="text-title">Page</a></div>
+		<div class="menu">
+
+				<a class=""><a href="/" class="page-text">Главная страница</a></a>
+				<a class="page"><a href="/users/" class="page-text">Список пользователей</a></a>
+				{% if auth == 0 %}
+					<a class="page"><a href="/registration/" class="page-text">Регистрация</a></a>
+					<a class="page"><a href="/login/" class="page-text">Авторизация</a></a>
+				{% elif auth == 1 %}
+					<a class="page"><a href="/logout/" class="page-text">Выйти</a></a>
+				{%endif%}
+				
+		</div>
+	</header>
+
+	{% block content %}{% endblock %}
+
+	<div class="bottom">
+		<div class="text-bottom">Все права защищены</div>
+	</div>
+</body>
+</html>

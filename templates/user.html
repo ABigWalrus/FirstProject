@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Пользователь{% endblock %}
+
+{% block content %} 
+
+<div>
+	<p>{{user_object.username}}</p>
+	<p>{{user_object.first_name}}</p>
+	<p>{{user_object.last_surname}}</p>
+	<p>{{user_object.email}}</p>
+	<p><a href="delete/">Удалить пользователя</a></p>
+	<p><a href="../">Назад</a></p>
+</div>
+
+
+{% endblock %}

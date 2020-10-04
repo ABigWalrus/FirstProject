@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Авторизация{% endblock %}
+
+{% block content %} 
+
+	<p>Вход в аккаунт</p>
+
+	<form method="POST">
+		{% csrf_token %}
+		<p><input type="text" name="username" placeholder="Имя Пользователя"></p>
+		<p><input type="password" name="password" placeholder="Пароль"></p>
+		<p><input type="submit" value="Войти"></p>
+	</form>
+	<a>Нет аккаунта?</a><a href="{% url 'registration' %}"> Создать</a>
+
+
+{% endblock %}

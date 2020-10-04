@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %} 
+
+<div>
+	<p>
+	{% if user_obj != 0 %}
+		Hello, {{ user_obj }}
+	{% else %}
+		Hello
+	{% endif %}
+	</p>
+	<p>Здесь будут новости</p>
+
+</div>
+
+
+{% endblock %}

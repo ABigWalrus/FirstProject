@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %} 
+
+<div>
+	<p>авторизация</p>
+
+	<form method="POST">
+		{% csrf_token %}
+		<input type="text" name="username">
+		<input type="password" name="password">
+		<input type="submit" value="Save">
+	</form>
+</div>
+
+
+{% endblock %}
