@@ -2,17 +2,49 @@
 
 {% block title %}Авторизация{% endblock %}
 
-{% block content %} 
+{% block style %}
+	.block {
+		background-color: #01796F;
+		border: 2pt solid;
+		width: 200pt;
+		position: relative;
+		padding: 10pt;
+		margin: 3%;
+	}
+	.field {
+		margin-left: 25pt;
+		margin-right: 25pt;
+		margin-top: 3pt;
+		width: 150pt;
+	}
+	.button {
+		margin: 3pt;
+		width: 80pt;
+		margin-left: 100pt;
+		position: 20pt;
+	}
+	.just-text {
+		margin-left: 65pt;
+	}
+	.just-text-2 {
+		margin-left: 105pt;
+	}
+{% endblock %}
 
-	<p>Вход в аккаунт</p>
+{% block content %} 
+	<div class="block">
+	<p class="just-text-2">Вход в аккаунт</p>
 
 	<form method="POST">
 		{% csrf_token %}
-		<p><input type="text" name="username" placeholder="Имя Пользователя"></p>
-		<p><input type="password" name="password" placeholder="Пароль"></p>
-		<p><input type="submit" value="Войти"></p>
+		<p><input type="text" name="username" placeholder="Имя Пользователя" class="field"></p>
+		<p><input type="password" name="password" placeholder="Пароль" class="field"></p>
+		<p><input type="submit" value="Войти" class="button"></p>
 	</form>
-	<a>Нет аккаунта?</a><a href="{% url 'registration' %}"> Создать</a>
-
+	{% if error == 1 %}
+		<p>Неверные входные данные</p>
+	{% endif %}
+	<a class="just-text">Нет аккаунта?</a><a href="{% url 'registration' %}"> Создать</a>
+	</div>
 
 {% endblock %}

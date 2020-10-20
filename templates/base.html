@@ -41,24 +41,25 @@
 		margin-bottom: 10pt;
 		margin-left: 10pt;
 	}
-	.page{
-		border-right-style: solid;
-		border-right-width: 2pt;
-		
-	}
 	
 	.page-text{
 		font-size: 10pt;
-		margin: 0;
-		margin-left: 10%;
-		margin-right: 10%;		
+		border-left: 2pt solid;
+		border-right: 2pt solid;
+		margin: 0pt;
+		padding-left: 8%;
+		padding-right: 8%;
+	}
+	.first-page-text{
+		font-size: 10pt;
+		border-left: 2pt solid;
+		border-right: 2pt solid;
+		padding-left: 8%;
+		padding-right: 8%;
 	}
 	.menu {
 		background-color: #01796F;
 		width: 100%;
-		padding: 0;
-		margin-top: 6pt;
-		margin-bottom: 6pt;
 	}
 	{% block style %}{% endblock %}
 </style>
@@ -68,13 +69,13 @@
 		<div class="title"><a class="text-title">Page</a></div>
 		<div class="menu">
 
-				<a class=""><a href="/" class="page-text">Главная страница</a></a>
-				<a class="page"><a href="/users/" class="page-text">Список пользователей</a></a>
+				<a href="/" class="first-page-text">Главная страница</a>
+				<a href="/users/" class="page-text">Список пользователей</a>
 				{% if auth == 0 %}
-					<a class="page"><a href="/registration/" class="page-text">Регистрация</a></a>
-					<a class="page"><a href="/login/" class="page-text">Авторизация</a></a>
+					<a href="/registration/" class="page-text">Регистрация</a>
+					<a href="/login/" class="page-text">Авторизация</a>
 				{% elif auth == 1 %}
-					<a class="page"><a href="/logout/" class="page-text">Выйти</a></a>
+					<a href="/logout/" class="page-text">Выйти</a>
 				{%endif%}
 				
 		</div>

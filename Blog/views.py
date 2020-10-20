@@ -31,13 +31,16 @@ def user_registration_view(request):
 		elif User.objects.filter(email = request.POST.get('email')).exists():
 			error = "email"
 		elif request.POST.get('password1') != request.POST.get('password2'):
-			error = "password"
+				error = "password1"
 		else:
 			
 			if form.is_valid():#form.is_valid()
 				form.save()
 				return redirect('success')
 			
+			else:
+				error = "password2"
+
 
 	context = {
 		'form': form,
@@ -60,6 +63,7 @@ def user_logout_view(request):
 	return redirect('login')
 
 def user_login_view(request):
+	error = 0;
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
@@ -69,7 +73,10 @@ def user_login_view(request):
 		if user_log is not None: 
 			login(request, user_log)
 			return redirect('home')
+		else:
+			error = 1;
 	context = {
+		'error': error,
 	}
 	return render(request, "login_page.html", context)
 

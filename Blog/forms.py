@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class CreateUserForm(UserCreationForm):
-	username = forms.CharField(widget = forms.TextInput(attrs = {"placeholder":"Имя Пользователя","class":"field"}))
+	username = forms.CharField(	widget = forms.TextInput(attrs = {"placeholder":"Имя Пользователя","class":"field"}))
 	email = forms.EmailField(widget = forms.EmailInput(attrs = {"placeholder":"Почта","class":"field"}))
 	first_name = forms.CharField(widget = forms.TextInput(attrs = {"placeholder":"Имя","class":"field"}))
 	last_name = forms.CharField(widget = forms.TextInput(attrs = {"placeholder":"Фамилия","class":"field"}))

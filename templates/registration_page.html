@@ -4,22 +4,46 @@
 
 {% block style %}
 	.block {
-		width = 100%;
+		background-color: #01796F;
+		border: 2pt solid;
+		width: 200pt;
+		position: relative;
+		padding: 10pt;
+		margin: 3%;
 	}
 	.field {
-		padding-bottom = 10pt;
+		margin-left: 25pt;
+		margin-right: 25pt;
+		margin-top: 3pt;
+		width: 150pt;
+	}
+	.button {
+		margin: 3pt;
+		width: 80pt;
+		margin-left: 100pt;
+		position: 20pt;
+	}
+	.just-text {
+		margin-left: 50pt;
+	}
+	.just-text-2 {
+		margin-left: 115pt;
 	}
 {% endblock %}
 
 {% block content %} 
 
-<div>
-	<p>
-
+<div class="block">
+	
+		<p class="just-text-2">Регистрация</p>
 		<form method="POST"> 
 			{% csrf_token %}
-			{{ form.as_p }}
-			<input type="submit" value="Save">
+			{% for i in form %}
+			<p>
+				{{ i }}
+			</p>
+			{% endfor %}
+			<input type="submit" value="Сохранить" class="button">
 		</form>
 		<p>
 		{% if error == "username" %}
@@ -28,12 +52,15 @@
 		{% if error == "email" %}
 			Почта уже используется
 		{% endif %}
-		{% if error == "validation" %}
-			Validation error
+		{% if error == "password1" %}
+			Повторите пароль
 		{% endif %}
-	</p>
-		<a>Уже есть аккаунт?</a><a href="{% url 'login' %}"> Войти</a>
-	</p>
+		{% if error == "password2" %}
+			Пароль слишком легкий
+		{% endif %}
+		</p>
+		<a class="just-text">Уже есть аккаунт?</a><a href="{% url 'login' %}"> Войти</a>
+	
 </div>
 
 
