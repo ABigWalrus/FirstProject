@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from .models import Message
 
 class CreateUserForm(UserCreationForm):
 	username = forms.CharField(	widget = forms.TextInput(attrs = {"placeholder":"Имя Пользователя","class":"field"}))
@@ -21,6 +22,13 @@ class CreateUserForm(UserCreationForm):
 			'password2',
 		]
 
+class MessageForm(forms.ModelForm):
+	content = forms.CharField(widget = forms.TextInput())
+	class Meta:
+		model = Message
+		fields = [
+			'content',
+		]
 
 	# def clean(self):
  #       email = self.cleaned_data.get('email')

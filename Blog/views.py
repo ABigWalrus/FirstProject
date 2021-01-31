@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .forms import CreateUserForm
+
+from .forms import CreateUserForm, MessageForm
+from .models import Profile, Message
+#from .models import Profile
+
 
 
 def home_view(request):
@@ -20,6 +22,19 @@ def home_view(request):
 
 	return render(request, "main.html", context)
 
+def chat_view(request):
+	form = MessageForm()
+	if request == 'POST':
+		if form.is_valid():
+			post = form.save(commit=False)
+			post.author = request.user
+			post.save()
+	context = {
+		'form': form,
+	}
+	return render(request, "chat_page.html", context)
+
+
 
 def user_registration_view(request):
 	form = CreateUserForm()
@@ -31,11 +46,12 @@ def user_registration_view(request):
 		elif User.objects.filter(email = request.POST.get('email')).exists():
 			error = "email"
 		elif request.POST.get('password1') != request.POST.get('password2'):
-				error = "password1"
+			error = "password1"
 		else:
 			
-			if form.is_valid():#form.is_valid()
+			if form.is_valid():
 				form.save()
+				request.POST.Profile.id = get_client_ip(request)
 				return redirect('success')
 			
 			else:
@@ -47,6 +63,30 @@ def user_registration_view(request):
 		'error': error,
 	}
 	return render(request, "registration_page.html", context)
+
+
+
+def user_login_view(request):
+	error = 0;
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user_log = authenticate(request, username = username, password = password)
+
+		if user_log is not None: 
+			login(request, user_log)
+			prof = Profile(ip = user_ip_address(request))
+			prof.user = request.user
+			prof.save()
+			return redirect('home')
+		else:
+			error = 1;
+	context = {
+		'error': error,
+	}
+	return render(request, "login_page.html", context)
+
+
 
 def registration_success_view(request):
 	if request.user.is_authenticated:
@@ -61,25 +101,6 @@ def registration_success_view(request):
 def user_logout_view(request):
 	logout(request)
 	return redirect('login')
-
-def user_login_view(request):
-	error = 0;
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-
-		user_log = authenticate(request, username = username, password = password)
-
-		if user_log is not None: 
-			login(request, user_log)
-			return redirect('home')
-		else:
-			error = 1;
-	context = {
-		'error': error,
-	}
-	return render(request, "login_page.html", context)
-
 
 def user_view(request, my_id):
 	if request.user.is_authenticated:
@@ -121,3 +142,15 @@ def users_view(request):
 		"auth": auth,
 	}
 	return render(request, "users_query_page.html", context)
+
+
+
+def user_ip_address(request):
+
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip

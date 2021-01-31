@@ -8,6 +8,7 @@ from .views import (
 		user_login_view,
 		user_logout_view,
 		registration_success_view,
+		chat_view,
 	)
 
 urlpatterns = [
@@ -16,4 +17,5 @@ urlpatterns = [
     	path('users/', users_view),
     	path('login/', user_login_view, name = "login"),
     	path('logout/', user_logout_view, name = "logout"),
+    	path('chat/', chat_view, name = "chat"),
     ]
