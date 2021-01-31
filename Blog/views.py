@@ -50,8 +50,11 @@ def user_registration_view(request):
 		else:
 			
 			if form.is_valid():
-				form.save()
-				request.POST.Profile.id = get_client_ip(request)
+				new_user = form.save()
+				new_user = authenticate(username=form.cleaned_data['username'],
+                                    	password=form.cleaned_data['password1'],)
+				login(request, new_user)
+				prof = Profile(user = new_user, ip = user_ip_address(request))
 				return redirect('success')
 			
 			else:
@@ -75,9 +78,9 @@ def user_login_view(request):
 
 		if user_log is not None: 
 			login(request, user_log)
-			prof = Profile(ip = user_ip_address(request))
-			prof.user = request.user
-			prof.save()
+			#prof = Profile(ip = user_ip_address(request))
+			#prof.user = request.user
+			#prof.save()
 			return redirect('home')
 		else:
 			error = 1;
