@@ -1,16 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
-	name	= models.CharField(max_length=20)
-	surname	= models.CharField(max_length=30)
-	nickname= models.CharField(max_length=15)
-	email	= models.EmailField(max_length=30)
-	password= models.CharField(max_length=20)
 
 class Profile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE,)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	ip =  models.CharField(max_length=15)
 
+
 class Message(models.Model):
-	author = models.ForeignKey(User, on_delete=models.CASCADE,)
+	author = models.ForeignKey(User, on_delete=models.CASCADE)
 	content = models.CharField(max_length=100)

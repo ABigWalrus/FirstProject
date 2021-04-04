@@ -24,11 +24,14 @@ def home_view(request):
 
 def chat_view(request):
 	form = MessageForm()
-	if request == 'POST':
-		if form.is_valid():
-			post = form.save(commit=False)
-			post.author = request.user
-			post.save()
+	if request.method == 'POST':
+		print("sssssssssss")
+		form.is_valid()
+		post = form.save(commit=False)
+		print(post)
+		post.author = request.user
+		#print(post.author)
+		post.save()
 	context = {
 		'form': form,
 	}
@@ -50,8 +53,13 @@ def user_registration_view(request):
 		else:
 			
 			if form.is_valid():
-				form.save()
-				request.POST.Profile.id = get_client_ip(request)
+				new_user = form.save()
+				new_user = authenticate(username=form.cleaned_data['username'],
+                                    	password=form.cleaned_data['password1'],)
+				login(request, new_user)
+				us = User.objects.filter(username = new_user.username).first()
+				prof = Profile(user = us, ip = user_ip_address(request))
+				prof.save()
 				return redirect('success')
 			
 			else:
@@ -75,9 +83,9 @@ def user_login_view(request):
 
 		if user_log is not None: 
 			login(request, user_log)
-			prof = Profile(ip = user_ip_address(request))
-			prof.user = request.user
-			prof.save()
+			#prof = Profile(ip = user_ip_address(request))
+			#prof.user = request.user
+			#prof.save()
 			return redirect('home')
 		else:
 			error = 1;
