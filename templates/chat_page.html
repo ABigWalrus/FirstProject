@@ -3,6 +3,9 @@
 {% block title %}Чат{% endblock %}
 
 {% block content %} 
+{% for i in messages %}
+<p> {{ i.author }}:{{ i.content }}:{{ i.time.time }} </p>
+{% endfor %}
 		<form method="POST"> 
 			{% csrf_token %}
 			{{ form.as_p }}

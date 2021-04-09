@@ -10,3 +10,4 @@ class Profile(models.Model):
 class Message(models.Model):
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
 	content = models.CharField(max_length=100)
+	time = models.DateTimeField(auto_now=True)

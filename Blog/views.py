@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 
 from .forms import CreateUserForm, MessageForm
 from .models import Profile, Message
-#from .models import Profile
-
 
 
 def home_view(request):
@@ -23,17 +21,18 @@ def home_view(request):
 	return render(request, "main.html", context)
 
 def chat_view(request):
+	messages = Message.objects.filter(author = request.user)
 	form = MessageForm()
 	if request.method == 'POST':
-		print("sssssssssss")
-		form.is_valid()
-		post = form.save(commit=False)
-		print(post)
-		post.author = request.user
-		#print(post.author)
-		post.save()
+		form = MessageForm(request.POST)
+		if form.is_valid():
+			post = form.save(commit = False)
+			post.author = request.user
+			post.save() 
+	form = MessageForm()
 	context = {
 		'form': form,
+		'messages':messages, 
 	}
 	return render(request, "chat_page.html", context)
 
