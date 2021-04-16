@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .forms import CreateUserForm, MessageForm
 from .models import Profile, Message
 
+import datetime
 
 def home_view(request):
 	if request.user.is_authenticated:
@@ -21,8 +22,10 @@ def home_view(request):
 	return render(request, "main.html", context)
 
 def chat_view(request):
-	messages = Message.objects.filter(author = request.user)
+	messages = Message.objects.filter(time__gt=datetime.datetime.now() - datetime.timedelta(3))
+	#filter(author = request.user)
 	form = MessageForm()
+	print(datetime.datetime(2004, 2, 4) - datetime.datetime.now())
 	if request.method == 'POST':
 		form = MessageForm(request.POST)
 		if form.is_valid():

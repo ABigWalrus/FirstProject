@@ -2,9 +2,31 @@
 
 {% block title %}Чат{% endblock %}
 
+{% block style %}
+.message{
+	background-color:#5AA4A2FF;
+	border: solid;
+	margin-left: 25pt;
+	margin-right: 25pt;
+	margin-top: 3pt;
+	width: 18%;
+}
+.date{
+	margin-top: 3pt;
+	color: #D1D1D1FF;
+	font-size: small;
+	margin-left: 25pt;
+	text-align: right;
+}
+.text{
+	margin-top: 3pt;
+	text-align: left;
+}
+{% endblock %}
+
 {% block content %} 
 {% for i in messages %}
-<p> {{ i.author }}:{{ i.content }}:{{ i.time.time }} </p>
+<div class="message"> <div class="text">{{ i.author }}: {{ i.content }} </div><div class="date"> {{ i.time }}</div></div>
 {% endfor %}
 		<form method="POST"> 
 			{% csrf_token %}
