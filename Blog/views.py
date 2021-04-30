@@ -5,9 +5,12 @@ from django.contrib.auth.models import User
 from .forms import CreateUserForm, MessageForm
 from .models import Profile, Message
 
-import datetime
+import datetime, threading
+
+objs = []
 
 def home_view(request):
+	global objs
 	if request.user.is_authenticated:
 		user_obj = request.user.username
 		auth = 1
@@ -21,8 +24,15 @@ def home_view(request):
 
 	return render(request, "main.html", context)
 
-def chat_view(request):
-	messages = Message.objects.filter(time__gt=datetime.datetime.now() - datetime.timedelta(3))
+def timer_view(request):
+    global objs
+    threading.Timer(3, timer_view, request).start()
+    if len(objs) != len(Message.objects.filter(time__gt=datetime.datetime.now() - datetime.timedelta(2))):
+    	objs = Message.objects.filter(time__gt=datetime.datetime.now() - datetime.timedelta(2))
+    	return chat_view(request, objs)
+    return chat_view(request, objs)
+
+def chat_view(request, messages):
 	#filter(author = request.user)
 	form = MessageForm()
 	print(datetime.datetime(2004, 2, 4) - datetime.datetime.now())

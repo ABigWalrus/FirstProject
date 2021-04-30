@@ -20,7 +20,15 @@
     	margin: 0;
     }
 
+
+    .middle {
+		height: 83vh;
+	}
+	.header{
+		height: 10vh;
+	}
 	.title {
+		height: 70%;
 		background-color: #01790A;
 	}
 	.text-title {
@@ -30,8 +38,9 @@
 		margin-left: 10pt;
 	}
 	.bottom {
+		height: 7vh;
 		background-color: #01796F;
-		position: fixed;
+		position: relative;
 		bottom: 0;
 		width: 100%;
 	}
@@ -58,6 +67,7 @@
 		padding-right: 8%;
 	}
 	.menu {
+		height: 30%;
 		background-color: #01796F;
 		width: 100%;
 	}
@@ -65,7 +75,7 @@
 </style>
 </head>
 <body>
-	<header>
+	<header class="header">
 		<div class="title"><a class="text-title">Page</a></div>
 		<div class="menu">
 
@@ -82,9 +92,9 @@
 				
 		</div>
 	</header>
-
+ 	<div class="middle">
 	{% block content %}{% endblock %}
-
+	</div>
 	<div class="bottom">
 		<div class="text-bottom">Все права защищены</div>
 	</div>
